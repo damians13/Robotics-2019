@@ -21,12 +21,15 @@ public class RobotMap {
 
 	public static final double MAX_ROBOT_SPEED = 0.6;
 	public static final double MIN_ROBOT_SPEED = -0.6;
-	public static final double MAX_TURN_SPEED = 0.2;
+	public static final double MAX_TURN_SPEED = 1;
 	public static final double SPEED_SHIFT_CUTOFF = 0.3;
-	public static final double ROTATION_DEADBAND = 0.05;
+	public static final double ROTATION_DEADBAND = 0.1;
 	public static final double GYRO_DEADBAND = 0.005;
-	public static final double JOY_DEADBAND = 0.01;
+	public static final double JOY_DEADBAND = 0.1;
 	public static final double GYRO_TOGGLE = 0.01;
+
+	// Do not change
+	public static final double MeasuredMaxTurnSpeed = 2.3564876644853245;
 
 	// Microsoft XBox Controller
 	public static final int Xbox_Left_Y_Axis = 1;

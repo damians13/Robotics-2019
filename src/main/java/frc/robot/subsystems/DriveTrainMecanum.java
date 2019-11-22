@@ -25,8 +25,7 @@ public class DriveTrainMecanum extends Subsystem {
     double totalGyroDifference = 0;
 
     //                           kP kI kD target
-    private PID gyroPID = new PID(1, 5, 0, 0);
-
+    private PID gyroPID = new PID(RobotMap.MeasuredMaxTurnSpeed / 360, 0, 0, 0);
     public _MecanumDrive drive;
 
     public DriveTrainMecanum() {
@@ -69,7 +68,7 @@ public class DriveTrainMecanum extends Subsystem {
 
             rotation *= gyroPID.getOutput(Robot.sensors.getGyroZ());
         }
-        System.out.println("\nTotal Gyro Difference: " + totalGyroDifference + "\nRotation: " + rotation + "\n");
+        //System.out.println("\nTotal Gyro Difference: " + totalGyroDifference + "\nRotation: " + rotation + "\n");
         
         /*
         Before setting rotation to totalGyroDifference, multiply it by a
@@ -87,14 +86,24 @@ public class DriveTrainMecanum extends Subsystem {
         backRightPower = joystickY + joystickX - rotation;
 
         // Cap speeds to RobotMap values
-        for (double speed : new double[]{frontLeftPower, frontRightPower, backLeftPower, backRightPower}) {
+        for (double speed : new double[] { frontLeftPower, frontRightPower, backLeftPower, backRightPower }) {
             if (speed > RobotMap.MAX_ROBOT_SPEED) {
                 speed = RobotMap.MAX_ROBOT_SPEED;
             } else if (speed < RobotMap.MIN_ROBOT_SPEED) {
                 speed = RobotMap.MIN_ROBOT_SPEED;
             }
         }
+        if (Math.abs(frontLeftPower) > RobotMap.MAX_ROBOT_SPEED)
+            frontLeftPower *= RobotMap.MAX_ROBOT_SPEED / Math.abs(frontLeftPower);
+        if (Math.abs(frontRightPower) > RobotMap.MAX_ROBOT_SPEED)
+            frontRightPower *= RobotMap.MAX_ROBOT_SPEED / Math.abs(frontRightPower);
+        if (Math.abs(backLeftPower) > RobotMap.MAX_ROBOT_SPEED)
+            backLeftPower *= RobotMap.MAX_ROBOT_SPEED / Math.abs(backLeftPower);
+        if (Math.abs(backRightPower) > RobotMap.MAX_ROBOT_SPEED)
+            backRightPower *= RobotMap.MAX_ROBOT_SPEED / Math.abs(backRightPower);
 
+        //System.out.println("X: " + joystickX + "\nY: " + joystickY + "\nZ: " + rotation);
+        //System.out.println("fleft: " + frontLeftPower + "\nfright: " + frontRightPower + "\nbleft: " + backLeftPower + "\nbright: " + backRightPower);
         // Power the motors
         frontLeft.set(frontLeftPower);
         frontRight.set(frontRightPower);
