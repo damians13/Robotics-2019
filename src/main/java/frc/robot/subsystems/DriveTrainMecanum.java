@@ -25,7 +25,8 @@ public class DriveTrainMecanum extends Subsystem {
     double totalGyroDifference = 0;
 
     //                           kP kI kD target
-    private PID gyroPID = new PID(RobotMap.MeasuredMaxTurnSpeed / 360, 0, 0, 0);
+    //RobotMap.MeasuredMaxTurnSpeed / 360
+    private PID gyroPID = new PID(0.007, 0.007, 0, 0);
     public _MecanumDrive drive;
 
     public DriveTrainMecanum() {
@@ -60,7 +61,7 @@ public class DriveTrainMecanum extends Subsystem {
             if (totalGyroDifference < RobotMap.GYRO_DEADBAND) {
                 rotation = 0;
             } else {
-                rotation = -totalGyroDifference;
+                rotation = -totalGyroDifference / 10;
             }
 
             if (Math.abs(rotation) > RobotMap.MAX_TURN_SPEED)

@@ -5,7 +5,8 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 public class OI {
-	Joystick driverController = new Joystick(3);
+	//Joystick driverController = new Joystick(3);
+	Joystick driverController = new Joystick(0);
 	
 	public Button driverA = new JoystickButton(driverController, RobotMap.Xbox_A_Button);
 	public Button driverB = new JoystickButton(driverController, RobotMap.Xbox_B_Button);

@@ -28,9 +28,12 @@ public class _MecanumDrive extends Command {
 	@Override
 	protected void execute() {
 
-		joyX = Robot.m_oi.driverControllerAxisValue(RobotMap.Joy_X_Axis);
-		joyY = -Robot.m_oi.driverControllerAxisValue(RobotMap.Joy_Y_Axis);
-		rotation = Robot.m_oi.driverControllerAxisValue(RobotMap.Joy_Z_Axis);
+		//joyX = Robot.m_oi.driverControllerAxisValue(RobotMap.Joy_X_Axis);
+		//joyY = -Robot.m_oi.driverControllerAxisValue(RobotMap.Joy_Y_Axis);
+		//rotation = Robot.m_oi.driverControllerAxisValue(RobotMap.Joy_Z_Axis);
+		joyX = Robot.m_oi.driverControllerAxisValue(RobotMap.Xbox_Left_X_Axis);
+		joyY = -Robot.m_oi.driverControllerAxisValue(RobotMap.Xbox_Left_Y_Axis);
+		rotation = Robot.m_oi.driverControllerAxisValue(RobotMap.Xbox_Right_Trigger) - Robot.m_oi.driverControllerAxisValue(RobotMap.Xbox_Left_Trigger);
 
 		Robot.driveTrain.mecanumDrive(joyX, joyY, rotation);
 	}
