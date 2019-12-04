@@ -11,7 +11,7 @@ public class SensorsPeriodic extends Command {
 
     @Override
     protected void execute() {
-       // System.out.println("NavX Y Axis: " + Robot.sensors.getGyroY());
+        System.out.println(Robot.sensors.getLidarDistance());
     }
 
     @Override
