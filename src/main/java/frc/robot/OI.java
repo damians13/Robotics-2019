@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.TestPneumatics;
 
 public class OI {
 	//Joystick driverController = new Joystick(3);
@@ -18,7 +19,7 @@ public class OI {
 	public Button driverStart = new JoystickButton(driverController, RobotMap.Xbox_Start_Button);
 	
 	public OI() {
-		// Button commands go in here
+		driverA.whenPressed(new TestPneumatics());
 	}
 	
 	public double driverControllerAxisValue(int axis) {
