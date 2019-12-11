@@ -37,6 +37,10 @@ public class Sensors extends Subsystem {
         return dist;
     }
 
+    public double getIRDistance() {
+        return 0; // Make this work
+    }
+
     @Override
     public void initDefaultCommand() {
       setDefaultCommand(new SensorsPeriodic());

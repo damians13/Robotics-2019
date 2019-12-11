@@ -11,18 +11,25 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.subsystems.DriveTrainMecanum;
 import frc.robot.subsystems.Sensors;
+import frc.robot.subsystems.Pneumatics;
 
 public class Robot extends TimedRobot {
 	
 	public static OI m_oi;
 	public static DriveTrainMecanum driveTrain;
 	public static Sensors sensors;
+	public static Pneumatics pneumatics;
+
+	public boolean solenoidEnabled;
 
 	@Override
 	public void robotInit() {
 		m_oi = new OI();
 		driveTrain = new DriveTrainMecanum();
 		sensors = new Sensors();
+		pneumatics = new Pneumatics();
+
+		solenoidEnabled = false;
 	}
 
 	@Override
