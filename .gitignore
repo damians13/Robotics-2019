@@ -7,6 +7,8 @@ build/
 gradlew.bat
 bin/
 .wpilib/
+gradlew
+.vscode/
 # End
 
 ### C++ ###
