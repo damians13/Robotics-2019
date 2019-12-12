@@ -28,8 +28,6 @@ public class Robot extends TimedRobot {
 		driveTrain = new DriveTrainMecanum();
 		sensors = new Sensors();
 		pneumatics = new Pneumatics();
-
-		solenoidEnabled = false;
 	}
 
 	@Override

@@ -10,13 +10,12 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 public class TestPneumatics extends Command {
 
     public static DoubleSolenoid testSolenoid;
 
-  public GrabberSolenoids() {
+  public TestPneumatics() {
     requires(Robot.pneumatics);
 
     testSolenoid = new DoubleSolenoid(2, 4);
@@ -28,13 +27,13 @@ public class TestPneumatics extends Command {
 
   @Override
   protected void execute() {
-    if (!Robot.solenoidEnabled) {
+    if (!Robot.pneumatics.solenoidEnabled) {
         testSolenoid.set(DoubleSolenoid.Value.kForward);
-        Robot.solenoidEnabled = true;
+        Robot.pneumatics.solenoidEnabled = true;
     }
-    else if (Robot.solenoidEnabled) {
+    else if (Robot.pneumatics.solenoidEnabled) {
         testSolenoid.set(DoubleSolenoid.Value.kReverse);
-        Robot.solenoidEnabled = false;
+        Robot.pneumatics.solenoidEnabled = false;
     }
   }
 

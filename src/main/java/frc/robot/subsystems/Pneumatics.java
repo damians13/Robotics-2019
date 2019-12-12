@@ -21,9 +21,12 @@ public class Pneumatics extends Subsystem {
   // here. Call these from Commands.
   private static Compressor compressor;
 
+  public boolean solenoidEnabled;
+
 
   public Pneumatics() {
     compressor = new Compressor();
+    solenoidEnabled = false;
   }
   @Override
   public void initDefaultCommand() { }

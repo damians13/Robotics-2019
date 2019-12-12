@@ -37,7 +37,7 @@ public class Sensors extends Subsystem {
         return dist;
     }
 
-    public double getIRDistance() {
+    public double getIrDistance() {
         return 0; // Make this work
     }
 

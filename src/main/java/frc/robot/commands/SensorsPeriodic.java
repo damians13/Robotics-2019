@@ -11,7 +11,7 @@ public class SensorsPeriodic extends Command {
 
     @Override
     protected void execute() {
-        System.out.println(Robot.sensors.getIRDistance());
+        System.out.println(Robot.sensors.getIrDistance());
     }
 
     @Override
