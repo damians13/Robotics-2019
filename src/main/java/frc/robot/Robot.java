@@ -24,10 +24,10 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void robotInit() {
-		m_oi = new OI();
 		driveTrain = new DriveTrainMecanum();
 		sensors = new Sensors();
 		pneumatics = new Pneumatics();
+		m_oi = new OI();
 	}
 
 	@Override

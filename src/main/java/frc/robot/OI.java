@@ -19,7 +19,7 @@ public class OI {
 	public Button driverStart = new JoystickButton(driverController, RobotMap.Xbox_Start_Button);
 	
 	public OI() {
-		driverA.whenPressed(new TestPneumatics());
+		driverA.whenPressed(new TestPneumatics()); // works with anything other than "init"
 	}
 	
 	public double driverControllerAxisValue(int axis) {

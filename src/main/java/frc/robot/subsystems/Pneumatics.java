@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
 //import frc.robot.commands.CompressorControl;
+import frc.robot.commands.TestPneumatics;
 
 /**
  * Add your docs here.
@@ -29,7 +30,9 @@ public class Pneumatics extends Subsystem {
     solenoidEnabled = false;
   }
   @Override
-  public void initDefaultCommand() { }
+  public void initDefaultCommand() {
+    //setDefaultCommand(new TestPneumatics());
+  }
   
 
   public void start() {

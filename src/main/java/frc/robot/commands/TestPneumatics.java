@@ -13,10 +13,10 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 public class TestPneumatics extends Command {
 
-    public static DoubleSolenoid testSolenoid;
+  public static DoubleSolenoid testSolenoid;
 
   public TestPneumatics() {
-    requires(Robot.pneumatics);
+    //requires(Robot.pneumatics);
 
     testSolenoid = new DoubleSolenoid(2, 4);
   }
