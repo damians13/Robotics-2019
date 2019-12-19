@@ -3,7 +3,10 @@
 # Start of my ignored files
 gradle/
 build/
-*.gradle
+settings.gradle
+build.gradle
+.project
+.classpath
 gradlew.bat
 bin/
 .wpilib/
