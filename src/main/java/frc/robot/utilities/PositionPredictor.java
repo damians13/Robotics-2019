@@ -41,28 +41,32 @@ public class PositionPredictor extends Thread {
 
     @Override
     public void run() {
-        if (Robot.timeSinceEnable == previousTimer + 1) {
-            totalRot += inputRot;
-            rot = bearingToRefAngle(totalRot);
+        while (!Thread.interrupted()) { // Loop through the code until the thread is interrupted
+            if (Robot.timeSinceEnable == previousTimer + 1) {
+                totalRot += inputRot;
+                rot = bearingToRefAngle(totalRot);
 
-            // Determine x and y components of cartesian movement vectors
-            xDist1 = xComponent(inputX, rot); // This should use the forward axis, not sure if it's right
-            xDist2 = xComponent(inputY, rot + 90);
-            yDist1 = yComponent(inputX, rot);
-            yDist2 = yComponent(inputY, rot + 90);
+                // Determine x and y components of cartesian movement vectors
+                xDist1 = xComponent(inputX, rot); // This should use the forward axis, not sure if it's right
+                xDist2 = xComponent(inputY, rot + 90);
+                yDist1 = yComponent(inputX, rot);
+                yDist2 = yComponent(inputY, rot + 90);
 
-            // Add x and y components of cartesian movement vectors
-            xDist += xDist1 + xDist2;
-            yDist += yDist1 + yDist2;
+                // Add x and y components of cartesian movement vectors
+                xDist += xDist1 + xDist2;
+                yDist += yDist1 + yDist2;
 
-        // Deal with any desynchronization issues
-        } else if (Robot.timeSinceEnable > previousTimer + 1) {
-            System.out.println("Uh oh, we skipped one!");
-        } else if (Robot.timeSinceEnable == previousTimer) {
-            // No time passed, this method was run faster than the FRC code (1/50th of a second)
-            // Do nothing
-        } else {
-            System.out.println("Uh oh, did we go back in time?  previousTimer > timeSinceEnable!");
+            // Deal with any desynchronization issues
+            } else if (Robot.timeSinceEnable > previousTimer + 1) {
+                System.out.println("Uh oh, we skipped one!  Exiting PositionPredictor...");
+                this.interrupt();
+            } else if (Robot.timeSinceEnable == previousTimer) {
+                // No time passed, this method was run faster than the FRC code (1/50th of a second)
+                // Do nothing
+            } else {
+                System.out.println("Uh oh, did we go back in time?  previousTimer > timeSinceEnable!  Exiting PositionPredictor...");
+                this.interrupt();
+            }
         }
     }
 
