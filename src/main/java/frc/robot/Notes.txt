@@ -1,3 +1,4 @@
 TO-DO:
 - finish PositionPredictor.java
 - add accelerometer readings to Sensors.java
+- fix bearingToRefAngle()

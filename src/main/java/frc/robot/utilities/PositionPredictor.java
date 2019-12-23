@@ -82,7 +82,7 @@ public class PositionPredictor extends Thread {
             return 90 - (260 - (angle % 360));
         } else if (angle % 360 < 270 && angle % 360 > 180) { // 3rd quadrant
             return 270 - (angle % 360);
-        } else if ((angle % 360) < 180 && (angle % 360) > 90) { // 4th quadrant
+        } else if (angle % 360 < 180 && angle % 360 > 90) { // 4th quadrant
             return ((angle % 360) - 90);
         } else {
             System.out.println("Error in bearingToRefAngle() in PositionPredictor.java, this shouldn't be possible!");
