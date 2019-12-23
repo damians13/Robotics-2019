@@ -37,7 +37,7 @@ public class Robot extends TimedRobot {
 	}
 
 	@Override
-	public void robotPeriodic() {
+	public void robotPeriodic() { // This might run while the robot is disabled, shouldn't break anything though
 		timeSinceEnable++;
 	}
 	

@@ -60,12 +60,14 @@ public class PositionPredictor extends Thread {
             } else if (Robot.timeSinceEnable > previousTimer + 1) {
                 System.out.println("Uh oh, we skipped one!  Exiting PositionPredictor...");
                 this.interrupt();
+                break;
             } else if (Robot.timeSinceEnable == previousTimer) {
                 // No time passed, this method was run faster than the FRC code (1/50th of a second)
                 // Do nothing
             } else {
                 System.out.println("Uh oh, did we go back in time?  previousTimer > timeSinceEnable!  Exiting PositionPredictor...");
                 this.interrupt();
+                break;
             }
         }
     }
