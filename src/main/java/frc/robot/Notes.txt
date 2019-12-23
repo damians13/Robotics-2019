@@ -1,2 +1,3 @@
 TO-DO:
-- add vendordeps folder to github working tree (git add vendordeps)
+- finish PositionPredictor.java
+- add accelerometer readings to Sensors.java

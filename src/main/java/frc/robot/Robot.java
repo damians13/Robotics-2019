@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import frc.robot.subsystems.DriveTrainMecanum;
 import frc.robot.subsystems.Sensors;
+import frc.robot.utilities.PositionPredictor;
 import frc.robot.subsystems.Pneumatics;
 
 public class Robot extends TimedRobot {
@@ -19,8 +20,10 @@ public class Robot extends TimedRobot {
 	public static DriveTrainMecanum driveTrain;
 	public static Sensors sensors;
 	public static Pneumatics pneumatics;
+	public static PositionPredictor positionPredictor;
 
-	public boolean solenoidEnabled;
+	public static boolean solenoidEnabled;
+	public static int timeSinceEnable; // Tracked in the number of times the code has run (50 per second)
 
 	@Override
 	public void robotInit() {
@@ -28,11 +31,14 @@ public class Robot extends TimedRobot {
 		sensors = new Sensors();
 		pneumatics = new Pneumatics();
 		m_oi = new OI();
+		positionPredictor = new PositionPredictor();
+
+		positionPredictor.start();
 	}
 
 	@Override
 	public void robotPeriodic() {
-		
+		timeSinceEnable++;
 	}
 	
 	@Override
