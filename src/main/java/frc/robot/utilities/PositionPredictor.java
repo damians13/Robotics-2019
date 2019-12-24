@@ -74,16 +74,16 @@ public class PositionPredictor extends Thread {
 
     private double bearingToRefAngle(double angle) {
         // Angle arm is on an axis
-        if ((angle % 360) == 0 || (angle % 360) == 90 || (angle % 360) == 180 || (angle % 360) == 270) {
-            return angle % 360;
-        } else if (angle % 360 < 90) { // 1st quadrant
-            return 90 - (angle % 360);
-        } else if (angle % 360 > 270) { // 2nd quadrant
-            return 90 - (260 - (angle % 360));
-        } else if (angle % 360 < 270 && angle % 360 > 180) { // 3rd quadrant
-            return 270 - (angle % 360);
-        } else if (angle % 360 < 180 && angle % 360 > 90) { // 4th quadrant
-            return ((angle % 360) - 90);
+        if (((angle + 90) % 360) == 0 || ((angle + 90) % 360) == 90 || ((angle + 90) % 360) == 180 || ((angle + 90) % 360) == 270) {
+            return (angle + 90) % 360;
+        } else if ((angle + 90) % 360 < 90) { // 1st quadrant
+            return 90 - ((angle + 90) % 360);
+        } else if ((angle + 90) % 360 > 270) { // 2nd quadrant
+            return 90 - (260 - ((angle + 90) % 360));
+        } else if ((angle + 90) % 360 < 270 && (angle + 90) % 360 > 180) { // 3rd quadrant
+            return 270 - ((angle + 90) % 360);
+        } else if ((angle + 90) % 360 < 180 && (angle + 90) % 360 > 90) { // 4th quadrant
+            return (((angle + 90) % 360) - 90);
         } else {
             System.out.println("Error in bearingToRefAngle() in PositionPredictor.java, this shouldn't be possible!");
             return 0;
