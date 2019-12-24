@@ -3,3 +3,6 @@ TO-DO:
 - add accelerometer readings to Sensors.java
 - do auto
 - USE PATHWEAVER FOR AUTO!!!
+- If position predictor doesn't work properly, maybe don't strafe in auto?  Accurate odometry
+seems really tough to do, and the odometry could be turned off after the auto phase, leaving the
+strafing and complicated mecanum stuff for the drive team
