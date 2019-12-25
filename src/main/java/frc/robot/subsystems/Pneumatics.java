@@ -11,8 +11,6 @@ import edu.wpi.first.wpilibj.Compressor;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
-//import frc.robot.commands.CompressorControl;
-import frc.robot.commands.TestPneumatics;
 
 /**
  * Add your docs here.
