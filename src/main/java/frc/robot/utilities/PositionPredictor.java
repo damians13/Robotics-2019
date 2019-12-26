@@ -1,6 +1,7 @@
 package frc.robot.utilities;
 
 import frc.robot.Robot;
+import frc.robot.subsystems.Sensors;
 
 public class PositionPredictor extends Thread {
 
@@ -11,7 +12,7 @@ public class PositionPredictor extends Thread {
      *  ^ . . . .
      *  ^ . . . .
      *  0 > > > X
-     * (rot stands for clockwise rotation in degrees)
+     * (rot stands for rotation as a true bearing)
      */
 
     private double xDist;
@@ -20,82 +21,87 @@ public class PositionPredictor extends Thread {
 
     private int previousTimer;
 
-    // Replace these with actual values from sensors, they should be updated every time that the
-    // timer in Robot (int timeSinceEnable) is updated/incremented
-    double inputX; // In meters per 1/50th of a second
-    double inputY; // In meters per 1/50th of a second
-    double inputRot; // In degrees per 1/50th of a second
+    private _Vector frontRightVector;
+    private _Vector frontLeftVector;
+    private _Vector backRightVector;
+    private _Vector backLeftVector;
+    private _Vector resultantVector;
 
-    private double xDist1;
-    private double xDist2;
-    private double yDist1;
-    private double yDist2;
-    private double rot;
+    private double prevFRdistance; // Prev stands for previous
+    private double prevFLdistance;
+    private double prevBRdistance;
+    private double prevBLdistance;
+    private double FRdistance;
+    private double FLdistance;
+    private double BRdistance;
+    private double BLdistance;
 
     public PositionPredictor() {
         previousTimer = Robot.timeSinceEnable;
 
         xDist = 0;
         yDist = 0;
+
+        prevFRdistance = 0;
+        prevFLdistance = 0;
+        prevBRdistance = 0;
+        prevBLdistance = 0;
+        FRdistance = 0;
+        FLdistance = 0;
+        BRdistance = 0;
+        BLdistance = 0;
+
+        frontRightVector = new _Vector(0, 0);
+        frontLeftVector = new _Vector(0, 0);
+        backRightVector = new _Vector(0, 0);
+        backLeftVector = new _Vector(0, 0);
     }
 
     @Override
     public void run() {
         while (!Thread.interrupted()) { // Loop through the code until the thread is interrupted
             if (Robot.timeSinceEnable == previousTimer + 1) {
-                totalRot += inputRot;
-                rot = bearingToRefAngle(totalRot);
+                totalRot += Robot.sensors.getGyroZ();
 
-                // Determine x and y components of cartesian movement vectors
-                xDist1 = xComponent(inputX, rot); // This should use the forward axis, not sure if it's right
-                xDist2 = xComponent(inputY, rot + 90);
-                yDist1 = yComponent(inputX, rot);
-                yDist2 = yComponent(inputY, rot + 90);
+                FRdistance = rotationsToDistance(Robot.sensors.getEncoderRotations(Sensors._Encoder.FRONT_RIGHT));
+                FLdistance = rotationsToDistance(Robot.sensors.getEncoderRotations(Sensors._Encoder.FRONT_LEFT));
+                BRdistance = rotationsToDistance(Robot.sensors.getEncoderRotations(Sensors._Encoder.BACK_RIGHT));
+                BLdistance = rotationsToDistance(Robot.sensors.getEncoderRotations(Sensors._Encoder.BACK_LEFT));
 
-                // Add x and y components of cartesian movement vectors
-                xDist += xDist1 + xDist2;
-                yDist += yDist1 + yDist2;
+                frontRightVector.setBearingAndMag(45 + totalRot, FRdistance - prevFRdistance);
+                frontLeftVector.setBearingAndMag(135 + totalRot, FLdistance - prevFLdistance);
+                backRightVector.setBearingAndMag(45 + totalRot, BRdistance - prevBRdistance);
+                backLeftVector.setBearingAndMag(135 + totalRot, BLdistance - prevBLdistance);
+
+                resultantVector = MiscUtils.addVectors(frontRightVector, frontLeftVector, backRightVector, backLeftVector);
+
+                xDist += resultantVector.getX();
+                yDist += resultantVector.getY();
+
+                prevFRdistance = FRdistance;
+                prevFLdistance = FLdistance;
+                prevBRdistance = BRdistance;
+                prevBLdistance = BLdistance;
 
             // Deal with any desynchronization issues
             } else if (Robot.timeSinceEnable > previousTimer + 1) {
                 System.out.println("Uh oh, we skipped one!  Exiting PositionPredictor...");
-                this.interrupt();
+                interrupt();
                 break;
             } else if (Robot.timeSinceEnable == previousTimer) {
-                // No time passed, this method was run faster than the FRC code (1/50th of a second)
+                // No time passed, method was run faster than the FRC code (1/50th of a second)
                 // Do nothing
             } else {
                 System.out.println("Uh oh, did we go back in time?  previousTimer > timeSinceEnable!  Exiting PositionPredictor...");
-                this.interrupt();
+                interrupt();
                 break;
             }
         }
     }
 
-    private double bearingToRefAngle(double angle) {
-        // Angle arm is on an axis
-        if (((angle + 90) % 360) == 0 || ((angle + 90) % 360) == 90 || ((angle + 90) % 360) == 180 || ((angle + 90) % 360) == 270) {
-            return (angle + 90) % 360;
-        } else if ((angle + 90) % 360 < 90) { // 1st quadrant
-            return 90 - ((angle + 90) % 360);
-        } else if ((angle + 90) % 360 > 270) { // 2nd quadrant
-            return 90 - (260 - ((angle + 90) % 360));
-        } else if ((angle + 90) % 360 < 270 && (angle + 90) % 360 > 180) { // 3rd quadrant
-            return 270 - ((angle + 90) % 360);
-        } else if ((angle + 90) % 360 < 180 && (angle + 90) % 360 > 90) { // 4th quadrant
-            return (((angle + 90) % 360) - 90);
-        } else {
-            System.out.println("Error in bearingToRefAngle() in PositionPredictor.java, this shouldn't be possible!");
-            return 0;
-        }
-    }
-
-    private double xComponent(double mag, double dir) {
-        return mag * Math.cos(90 - dir);
-    }
-
-    private double yComponent(double mag, double dir) {
-        return mag * Math.sin(90 - dir);
+    // Convert wheel rotations to distance (in inches)
+    private double rotationsToDistance(double rotations) {
+        return rotations * 6 * Math.PI; // Return rotations * circumference (6in * PI)
     }
 
     public double getXDist() {
@@ -107,7 +113,7 @@ public class PositionPredictor extends Thread {
     }
 
     public double getRot() {
-        return rot;
+        return totalRot;
     }
 
 }

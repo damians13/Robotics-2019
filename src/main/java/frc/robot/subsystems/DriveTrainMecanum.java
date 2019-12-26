@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Spark;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
@@ -9,10 +11,10 @@ import frc.robot.utilities.PID;
 
 public class DriveTrainMecanum extends Subsystem {
     // https://www.desmos.com/calculator/mjjpxtbf11
-    public Spark frontLeft;
-    public Spark frontRight;
-    public Spark backLeft;
-    public Spark backRight;
+    public CANSparkMax frontLeft;
+    public CANSparkMax frontRight;
+    public CANSparkMax backLeft;
+    public CANSparkMax backRight;
 
     double joyX = 0;
     double joyY = 0;
@@ -30,10 +32,10 @@ public class DriveTrainMecanum extends Subsystem {
     public _MecanumDrive drive;
 
     public DriveTrainMecanum() {
-        frontLeft = new Spark(0);
-        frontRight = new Spark(1);
-        backLeft = new Spark(2);
-        backRight = new Spark(3);
+        frontLeft = new CANSparkMax(0, MotorType.kBrushless);
+        frontRight = new CANSparkMax(1, MotorType.kBrushless);
+        backLeft = new CANSparkMax(2, MotorType.kBrushless);
+        backRight = new CANSparkMax(3, MotorType.kBrushless);
 
         frontRight.setInverted(true);
     }
@@ -103,8 +105,11 @@ public class DriveTrainMecanum extends Subsystem {
         if (Math.abs(backRightPower) > RobotMap.MAX_ROBOT_SPEED)
             backRightPower *= RobotMap.MAX_ROBOT_SPEED / Math.abs(backRightPower);
 
-        //System.out.println("X: " + joystickX + "\nY: " + joystickY + "\nZ: " + rotation);
-        //System.out.println("fleft: " + frontLeftPower + "\nfright: " + frontRightPower + "\nbleft: " + backLeftPower + "\nbright: " + backRightPower);
+        /**
+         *************** TO-DO ***************
+         * - trapezoidal motion profiling here
+         */
+
         // Power the motors
         frontLeft.set(frontLeftPower);
         frontRight.set(frontRightPower);

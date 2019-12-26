@@ -6,9 +6,4 @@ TO-DO:
 - If position predictor doesn't work properly, maybe don't strafe in auto?  Accurate odometry
 seems really tough to do, and the odometry could be turned off after the auto phase, leaving the
 strafing and complicated mecanum stuff for the drive team
-
-- Motion profiling idea if PathWeaver doesn't work out:
-  - Create class for individual wheel motors containing desired velocity
-  - Create a class that holds all 4 wheels, along with methods to apply speed and rotation to the motors (very similar to mecanum algorithm)
-  - These methods would add positive and negative values together, and these values could be determined based on desired trajectory, forward
-  movement, desired side to side movement, and maximum operating speed
+- Trapezoidal motion profiling in DriveTrainMecanum
