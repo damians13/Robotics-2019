@@ -61,7 +61,7 @@ public class PositionPredictor extends Thread {
     public void run() {
         while (!Thread.interrupted()) { // Loop through the code until the thread is interrupted
             if (Robot.timeSinceEnable == previousTimer + 1) {
-                totalRot += Robot.sensors.getGyroZ();
+                totalRot += Robot.sensors.getGyroZ() / 50;
 
                 FRdistance = rotationsToDistance(Robot.sensors.getEncoderRotations(Sensors._Encoder.FRONT_RIGHT));
                 FLdistance = rotationsToDistance(Robot.sensors.getEncoderRotations(Sensors._Encoder.FRONT_LEFT));
