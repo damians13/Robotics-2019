@@ -105,11 +105,6 @@ public class DriveTrainMecanum extends Subsystem {
         if (Math.abs(backRightPower) > RobotMap.MAX_ROBOT_SPEED)
             backRightPower *= RobotMap.MAX_ROBOT_SPEED / Math.abs(backRightPower);
 
-        /**
-         *************** TO-DO ***************
-         * - trapezoidal motion profiling here
-         */
-
         // Power the motors
         frontLeft.set(frontLeftPower);
         frontRight.set(frontRightPower);
