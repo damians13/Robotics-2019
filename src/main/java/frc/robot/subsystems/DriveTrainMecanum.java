@@ -32,9 +32,9 @@ public class DriveTrainMecanum extends Subsystem {
     public _MecanumDrive drive;
 
     public DriveTrainMecanum() {
-        frontLeft = new CANSparkMax(0, MotorType.kBrushless);
-        frontRight = new CANSparkMax(1, MotorType.kBrushless);
-        backLeft = new CANSparkMax(2, MotorType.kBrushless);
+        frontLeft = new CANSparkMax(1, MotorType.kBrushless);
+        frontRight = new CANSparkMax(2, MotorType.kBrushless);
+        backLeft = new CANSparkMax(4, MotorType.kBrushless);
         backRight = new CANSparkMax(3, MotorType.kBrushless);
 
         frontRight.setInverted(true);
